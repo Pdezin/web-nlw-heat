@@ -24,6 +24,8 @@ type AuthContextData = {
   user: User | null;
   signInUrl: string;
   signOut: () => void;
+  whiteMode: boolean;
+  toggleTheme: () => void;
 };
 
 type TAuthProvider = {
@@ -32,8 +34,13 @@ type TAuthProvider = {
 
 export const AuthProvider = (props: TAuthProvider) => {
   const [user, setUser] = useState<User | null>(null);
+  const [whiteMode, setWhiteMode] = useState(false);
 
   const signInUrl = `https://github.com/login/oauth/authorize?scope=user&client_id=ff7a3beb094c53cc70ce`;
+
+  function toggleTheme() {
+    setWhiteMode(prev => !prev);
+  }
 
   async function signIn(githubCode: string) {
     const response = await api.post<AuthResponse>('authenticate', {
@@ -72,7 +79,9 @@ export const AuthProvider = (props: TAuthProvider) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signInUrl, user, signOut }}>
+    <AuthContext.Provider
+      value={{ signInUrl, user, signOut, whiteMode, toggleTheme }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

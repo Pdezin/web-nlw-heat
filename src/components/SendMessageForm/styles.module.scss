@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.sendMessageWhite {
+  background: #eee;
+}
+
 .signOutButton {
   background: transparent;
   border: 0;
@@ -110,6 +114,22 @@
     border: 0;
     &:hover {
       filter: brightness(0.9);
+    }
+  }
+}
+
+.sendMessageFormWhite {
+  background: #f5f5f5;
+
+  label {
+    background: #fff;
+  }
+
+  textarea {
+    color: #000;
+
+    &::placeholder {
+      color: #434343;
     }
   }
 }

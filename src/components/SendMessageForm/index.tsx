@@ -5,7 +5,7 @@ import { api } from '../../services/api';
 import styles from './styles.module.scss';
 
 const SendMessageForm: React.FC = () => {
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut, whiteMode } = useContext(AuthContext);
   const [message, setMessage] = useState('');
 
   async function handleSendMessage(e: FormEvent) {
@@ -22,8 +22,16 @@ const SendMessageForm: React.FC = () => {
   }
 
   return (
-    <div className={styles.sendMessageWrapper}>
-      <button onClick={signOut} className={styles.signOutButton}>
+    <div
+      className={`${styles.sendMessageWrapper} ${
+        whiteMode ? styles.sendMessageWhite : ''
+      }`}
+    >
+      <button
+        onClick={signOut}
+        className={styles.signOutButton}
+        style={whiteMode ? { color: '#232323' } : {}}
+      >
         <VscSignOut size={32} />
       </button>
 
@@ -32,19 +40,28 @@ const SendMessageForm: React.FC = () => {
           <img src={user?.avatar_url} alt={user?.name} />
         </div>
         <strong className={styles.userName}>{user?.name}</strong>
-        <span className={styles.userGithub}>
+        <span
+          className={styles.userGithub}
+          style={whiteMode ? { color: '#232323' } : {}}
+        >
           <VscGithubInverted size={16} />
           {user?.login}
         </span>
       </header>
 
-      <form onSubmit={handleSendMessage} className={styles.sendMessageForm}>
+      <form
+        onSubmit={handleSendMessage}
+        className={`${styles.sendMessageForm} ${
+          whiteMode ? styles.sendMessageFormWhite : ''
+        }`}
+      >
         <label htmlFor="message">Mensagem</label>
         <textarea
           name="message"
           id="message"
           placeholder="Qual a sua expectativa para o evento?"
           onChange={({ target }) => setMessage(target.value)}
+          value={message}
         />
 
         <button type="submit">Enviar mensagem</button>

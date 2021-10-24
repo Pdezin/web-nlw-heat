@@ -18,3 +18,17 @@
   right: -200px;
   top: 0;
 }
+
+.main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.whiteTheme {
+  background-color: #fff;
+  color: #000;
+
+  .contentSigned::before {
+    background: url('./assets/background.svg') no-repeat;
+  }
+}

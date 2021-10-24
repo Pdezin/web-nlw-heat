@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './styles.module.scss';
 import LogoImg from '../../assets/logo.svg';
+import LogoWhite from '../../assets/logoWhite.svg';
 import { api } from '../../services/api';
 import io from 'socket.io-client';
+import { MdLightMode, MdModeNight } from 'react-icons/md';
+import { AuthContext } from '../../contexts/auth';
 
 type Message = {
   id: string;
@@ -22,6 +25,8 @@ socket.on('new_message', newMessage => {
 });
 
 const MessageList: React.FC = () => {
+  const { whiteMode, toggleTheme } = useContext(AuthContext);
+
   const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,7 +47,17 @@ const MessageList: React.FC = () => {
 
   return (
     <div className={styles.messageListWrapper}>
-      <img src={LogoImg} alt="DoWhile 2021" />
+      <div className={styles.header}>
+        <img src={whiteMode ? LogoWhite : LogoImg} alt="DoWhile 2021" />
+        <div style={{ cursor: 'pointer' }} onClick={toggleTheme}>
+          {whiteMode ? (
+            <MdModeNight size={40} color="#000" />
+          ) : (
+            <MdLightMode size={40} />
+          )}
+        </div>
+      </div>
+
       <ul className={styles.messageList}>
         {messages.map(message => (
           <li className={styles.message} key={message.id}>

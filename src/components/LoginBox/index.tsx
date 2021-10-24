@@ -4,9 +4,13 @@ import { VscGithubInverted } from 'react-icons/vsc';
 import { AuthContext } from '../../contexts/auth';
 
 const LoginBox: React.FC = () => {
-  const { signInUrl } = useContext(AuthContext);
+  const { signInUrl, whiteMode } = useContext(AuthContext);
   return (
-    <div className={styles.loginBoxWrapper}>
+    <div
+      className={`${styles.loginBoxWrapper} ${
+        whiteMode ? styles.loginBoxWhite : ''
+      }`}
+    >
       <strong>Compartilhe sua mensagem</strong>
       <a href={signInUrl} className={styles.signInWithGithub}>
         <VscGithubInverted size="24" /> Entrar com Github
